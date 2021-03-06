@@ -1,0 +1,29 @@
+{
+  "name": "cook-book-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "./node_modules/.bin/nodemon  node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kl4532/cook-book-api.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kl4532/cook-book-api/issues"
+  },
+  "homepage": "https://github.com/kl4532/cook-book-api#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "mysql": "^2.18.1",
+    "mysql2": "^2.2.5",
+    "nodemon": "^2.0.7"
+  }
+}
