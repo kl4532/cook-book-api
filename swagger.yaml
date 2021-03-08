@@ -94,3 +94,18 @@ paths:
       responses:
         '200':
           description: OK
+  /ingredients/{id}:
+    get:
+      summary: Returns recipe for recipe with id.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Parameter description in CommonMark or HTML.
+          schema:
+            type: integer
+            format: int64
+            minimum: 1
+      responses:
+        '200':
+          description: OK

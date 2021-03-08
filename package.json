@@ -20,6 +20,7 @@
   "homepage": "https://github.com/kl4532/cook-book-api#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "express-validator": "^6.10.0",
     "swagger-ui-express": "^4.1.6",

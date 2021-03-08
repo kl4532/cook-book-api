@@ -1,5 +1,6 @@
 module.exports = app => {
     const recipes = require("../controllers/recipes.js");
+    const ingredients = require("../controllers/ingredients.js");
 
     const router = require("express").Router();
 
@@ -21,7 +22,7 @@ module.exports = app => {
     //
     // router.post("/ingredients", recipes.addRecipe);
     //
-    // router.get("/ingredients/:id", recipes.getRecipe);
+    router.get("/ingredients/:id", ingredients.getIngredientsForRecipe);
     //
     // router.put("/ingredients/:id", recipes.updateRecipe);
     //

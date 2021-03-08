@@ -1,0 +1,20 @@
+{
+  "name": "recip name",
+  "preparationTimeInMinutes": "23",
+  "description": "LONG DESCCCRRRRRRRITION",
+  "ingredients": [
+    {
+      "_id": "1615225775737_s4ymc",
+      "name": "ing1",
+      "amount": "123123",
+      "unit": "123"
+    },
+    {
+      "_id": "1615225781430_eypy7",
+      "name": "ing2",
+      "amount": "34",
+      "unit": "34"
+    }
+  ],
+  "_id": "1615225805221_60vei"
+}
