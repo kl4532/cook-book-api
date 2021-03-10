@@ -53,7 +53,6 @@ exports.addRecipe = (req, res) => {
 };
 
 exports.updateRecipe = (req, res) => {
-    // const sql = `UPDATE Recipe SET ? WHERE id=${req.params.id}`;
 
     // update basic recipe
     const sql = `UPDATE Recipe SET 
@@ -64,16 +63,36 @@ exports.updateRecipe = (req, res) => {
 
     db.query(sql, req.body, (err, rows) => {
         if(err) throw err;
-        console.log(`Data updated ${rows}`);
-        res.json(req.body);
+        console.log(`Recipe updated ${rows}`);
+        // res.json(req.body);
     })
 
-    // update ingredients
-    // db.query(sql, req.body, (err, rows) => {
-    //     if(err) throw err;
-    //     console.log(`Data updated ${rows}`);
-    //     res.json(req.body);
-    // })
+    let sqlRRI = `DELETE FROM RecipeIngredient WHERE recipe_id = ${req.body._id}`;
+    db.query(sqlRRI, (err, rows) => {
+        if(err) throw err;
+        console.log(`Data deleted ${req.params._id}`);
+    })
+
+    let sqlRI = 'DELETE FROM Ingredient WHERE id NOT IN (SELECT ingredient_id FROM RecipeIngredient)';
+    db.query(sqlRI, (err, rows) => {
+        if(err) throw err;
+        console.log(`Data deleted ${req.params.id}`);
+    })
+
+    for(const ing of req.body.ingredients) {
+
+        const sqlCrI = `INSERT INTO Ingredient (id, name, amount, unit) VALUES ('${ing._id}', '${ing.name}', ${ing.amount}, '${ing.unit}');`;
+        db.query(sqlCrI,(err, rows) => {
+            if(err) throw err;
+            console.log(`Ingredient created ${ing._id}`);
+        })
+
+        const sqlCrRI = `INSERT INTO RecipeIngredient (recipe_id, ingredient_id) VALUES ('${req.body._id}', '${ing._id}');`;
+        db.query(sqlCrRI, req.body, (err, rows) => {
+            if(err) throw err;
+            console.log(`RecipeIngredient created ${ing._id}`);
+        })
+    }
 };
 
 exports.deleteRecipe = (req, res) => {

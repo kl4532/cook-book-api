@@ -21,8 +21,8 @@ create table Ingredient (id BIGINT NOT NULL PRIMARY KEY,
 
 create table RecipeIngredient (recipe_id BIGINT NOT NULL,
 	ingredient_id BIGINT NOT NULL,
-	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE,
-	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES Ingredient(id) ON DELETE CASCADE)
+	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES Ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 #
