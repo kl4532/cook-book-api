@@ -16,17 +16,7 @@ module.exports = app => {
 
     router.delete("/recipes/:id", recipes.deleteRecipe);
 
-    // Ingredients
-
-    // router.get("/ingredients", recipes.getAllRecipes);
-    //
-    // router.post("/ingredients", recipes.addRecipe);
-    //
     router.get("/ingredients/:id", ingredients.getIngredientsForRecipe);
-    //
-    // router.put("/ingredients/:id", recipes.updateRecipe);
-    //
-    // router.delete("/ingredients/:id", recipes.deleteRecipe);
 
     app.use('/api', router);
 };

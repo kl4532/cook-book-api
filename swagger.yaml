@@ -29,15 +29,31 @@ paths:
             schema:
               type: object
               properties:
+                _id:
+                  type: number
                 name:
                   type: string
                 description:
                   type: string
-                preparation_time:
+                preparationTimeInMinutes:
                   type: number
+                ingredients:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      _id:
+                        type: number
+                      name:
+                        type: string
+                      amount:
+                        type: number
+                      unit:
+                        type: string
       responses:
         '201':
           description: Created
+
   /recipes/{id}:
     get:
       summary: Returns recipe by its ID.
@@ -53,6 +69,8 @@ paths:
       responses:
         '200':
           description: OK
+        '404':
+          description: Not found
     put:
       summary: Updates recipe with specified ID.
       requestBody:
