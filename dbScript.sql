@@ -9,7 +9,7 @@ connect Cookbook;
 	
 create table Recipe (id BIGINT NOT NULL PRIMARY KEY,
 	name VARCHAR(25), 
-	description VARCHAR(50), 
+	description VARCHAR(2000),
 	preparation_time INT)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
