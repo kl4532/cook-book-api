@@ -15,13 +15,13 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(cors());
 
 const port = process.env.PORT || '3000';
+const ip = process.env.IP || 'http://localhost:';
 
 require("./routes/routes")(app);
 app.listen(port, () => {
-    console.log(`Server is running on port http://localhost:${port}`);
-    console.log(`Swagger on http://localhost:${port}api-docs/#/`);
+    console.log(`Server is running on port ${ip+port}`);
+    console.log(`Swagger on ${ip+port}/api-docs/#/`);
     console.log('The value of PORT is:', process.env.PORT);
-
 })
 
 // app.get('/recipes', (req,res) => {
