@@ -12,7 +12,7 @@ async function querySql(sql, res, successMessage) {
 }
 
 exports.getAllRecipes = async function (req, res){
-    const sql = `SELECT r.id, r.name, r.description, r.preparation_time FROM Recipe r;`;
+    const sql = `SELECT r.id, r.name, r.description, r.preparation_time FROM recipe r;`;
     // await querySql(sql, res, 'Recipes fetched');
     try {
         const result = await db.query(sql);
@@ -23,7 +23,7 @@ exports.getAllRecipes = async function (req, res){
 };
 
 exports.getRecipe = async function(req, res) {
-    const sql = `SELECT r.name, r.description, r.preparation_time FROM Recipe r WHERE id = '${req.params.id}';`;
+    const sql = `SELECT r.name, r.description, r.preparation_time FROM recipe r WHERE id = '${req.params.id}';`;
     try {
         const result = await db.query(sql);
         if(result[0].length === 0) {
@@ -43,7 +43,7 @@ exports.addRecipe = async function(req, res) {
         res.status(400).send({ message: "Recipe body can not be empty!" });
         return;
     }
-    const sqlRecipe = `INSERT INTO Recipe (id, name, description, preparation_time)
+    const sqlRecipe = `INSERT INTO recipe (id, name, description, preparation_time)
                 VALUES (${req.body._id}, '${req.body.name}', '${req.body.description}', ${req.body.preparationTimeInMinutes});`;
 
     try {
@@ -56,9 +56,9 @@ exports.addRecipe = async function(req, res) {
 
     for (const ing of req.body.ingredients) {
 
-        const sqlIngredient = `INSERT INTO Ingredient (id, name, amount, unit)
+        const sqlIngredient = `INSERT INTO ingredient (id, name, amount, unit)
                 VALUES ('${ing._id}', '${ing.name}', ${ing.amount}, '${ing.unit}');`;
-        const sqlRecipeIngredient = `INSERT INTO RecipeIngredient (recipe_id, ingredient_id) VALUES ('${req.body._id}', '${ing._id}');`;
+        const sqlRecipeIngredient = `INSERT INTO recipeingredient (recipe_id, ingredient_id) VALUES ('${req.body._id}', '${ing._id}');`;
 
         try{
             await db.query(`${sqlIngredient}`);
@@ -70,7 +70,7 @@ exports.addRecipe = async function(req, res) {
 
         try{
             await db.query(`${sqlRecipeIngredient}`);
-            console.log(`Ingredient added to RecipeIngredient`);
+            console.log(`Ingredient added to recipeingredient`);
         } catch (err) {
             console.log(`${err.code}->${err.message}`);
             return res.status(500).json(err);
@@ -84,7 +84,7 @@ exports.addRecipe = async function(req, res) {
 exports.updateRecipe = async function (req, res) {
 
     // update basic recipe
-    const sql = `UPDATE Recipe SET 
+    const sql = `UPDATE recipe SET 
      name='${req.body.name}',
      preparation_time='${req.body.preparationTimeInMinutes}',
      description='${req.body.description}' 
@@ -99,7 +99,7 @@ exports.updateRecipe = async function (req, res) {
     }
 
     // remove all old ingredients from RecipeIngredient...
-    let sqlRRI = `DELETE FROM RecipeIngredient WHERE recipe_id = ${req.body._id}`;
+    let sqlRRI = `DELETE FROM recipeingredient WHERE recipe_id = ${req.body._id}`;
     try{
         await db.query(sqlRRI);
         console.log(`Ingredient deleted`);
@@ -108,8 +108,8 @@ exports.updateRecipe = async function (req, res) {
         return res.status(500).json(err);
     }
 
-    // ... and Ingredient table
-    let sqlRI = 'DELETE FROM Ingredient WHERE id NOT IN (SELECT ingredient_id FROM RecipeIngredient)';
+    // ... and ingredient table
+    let sqlRI = 'DELETE FROM ingredient WHERE id NOT IN (SELECT ingredient_id FROM recipeingredient)';
     try{
         await db.query(sqlRI);
         console.log(`Ingredient deleted`);
@@ -121,7 +121,7 @@ exports.updateRecipe = async function (req, res) {
     // add new ingredients
     for(const ing of req.body.ingredients) {
 
-        const sqlCrI = `INSERT INTO Ingredient (id, name, amount, unit) VALUES ('${ing._id}', '${ing.name}', ${ing.amount}, '${ing.unit}');`;
+        const sqlCrI = `INSERT INTO ingredient (id, name, amount, unit) VALUES ('${ing._id}', '${ing.name}', ${ing.amount}, '${ing.unit}');`;
         try{
             await db.query(sqlCrI);
             console.log(`Ingredients deleted`);
@@ -130,7 +130,7 @@ exports.updateRecipe = async function (req, res) {
             return res.status(500).json(err);
         }
 
-        const sqlCrRI = `INSERT INTO RecipeIngredient (recipe_id, ingredient_id) VALUES ('${req.body._id}', '${ing._id}');`;
+        const sqlCrRI = `INSERT INTO recipeingredient (recipe_id, ingredient_id) VALUES ('${req.body._id}', '${ing._id}');`;
         try{
             await db.query(sqlCrRI);
             console.log(`Ingredients deleted`);
@@ -144,7 +144,7 @@ exports.updateRecipe = async function (req, res) {
 
 exports.deleteRecipe = async function(req, res) {
 
-    const sql = `DELETE FROM Recipe WHERE id = ${req.params.id}`;
+    const sql = `DELETE FROM recipe WHERE id = ${req.params.id}`;
 
     try{
         await db.query(sql);
@@ -155,7 +155,7 @@ exports.deleteRecipe = async function(req, res) {
     }
 
     // remove ingredient orphans
-    const sqlRI = 'DELETE FROM Ingredient WHERE id NOT IN (SELECT ingredient_id FROM RecipeIngredient)';
+    const sqlRI = 'DELETE FROM ingredient WHERE id NOT IN (SELECT ingredient_id FROM recipeingredient)';
     try{
         await db.query(sqlRI);
         console.log(`Data deleted ${req.params.id}`);

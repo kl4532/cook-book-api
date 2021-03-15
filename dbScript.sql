@@ -7,22 +7,22 @@ create database Cookbook;
 
 connect Cookbook;
 	
-create table Recipe (id BIGINT NOT NULL PRIMARY KEY,
+create table recipe (id BIGINT NOT NULL PRIMARY KEY,
 	name VARCHAR(25), 
 	description VARCHAR(2000),
 	preparation_time INT)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table Ingredient (id BIGINT NOT NULL PRIMARY KEY,
+create table ingredient (id BIGINT NOT NULL PRIMARY KEY,
 	name VARCHAR(50),
 	amount FLOAT,
 	unit VARCHAR(20))
 	ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-create table RecipeIngredient (recipe_id BIGINT NOT NULL,
+create table recipeingredient (recipe_id BIGINT NOT NULL,
 	ingredient_id BIGINT NOT NULL,
-	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES Recipe(id) ON DELETE CASCADE ON UPDATE CASCADE,
-	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES Ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)
+	CONSTRAINT fk_recipe FOREIGN KEY(recipe_id) REFERENCES recipe(id) ON DELETE CASCADE ON UPDATE CASCADE,
+	CONSTRAINT fk_ingredient FOREIGN KEY(ingredient_id) REFERENCES ingredient(id) ON DELETE CASCADE ON UPDATE CASCADE)
 	ENGINE=InnoDB DEFAULT CHARSET=utf8; 
 
 #
