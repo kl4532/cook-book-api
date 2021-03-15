@@ -5,7 +5,6 @@ const cors = require('cors');
 const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger.yaml');
-const db = require('./dbConfig');
 
 const app = express();
 
@@ -17,10 +16,10 @@ app.use(cors());
 
 const port = process.env.PORT || '3000';
 const ip = process.env.IP || 'http://localhost:';
+const swagger = process.env.SWAGGER_URL || `${ip+port}/api-docs/#/`
 
 require("./routes/routes")(app);
 app.listen(port, () => {
     console.log(`Server is running on port ${ip+port}`);
-    console.log(`Swagger on ${ip+port}/api-docs/#/`);
-    console.log('DB-config', [db.host, db.user, db.database]);
+    console.log(`Swagger running on ${swagger}`);
 })
