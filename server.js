@@ -17,21 +17,10 @@ app.use(cors());
 const port = process.env.PORT || '3000';
 const ip = process.env.IP || 'http://localhost:';
 
-const dbUri =  process.env.CLEARDB_DATABASE_URL;
-const credentials = dbUri.split(":");
-const user = credentials[0];
-const password = credentials[1];
-const host = credentials[2];
-const dbName = credentials[3];
-
 require("./routes/routes")(app);
 app.listen(port, () => {
-    console.log('full DB URL', dbUri);
-    console.log('credentials', credentials);
-
     console.log(`Server is running on port ${ip+port}`);
     console.log(`Swagger on ${ip+port}/api-docs/#/`);
-    console.log('The value of PORT is:', process.env.PORT);
 })
 
 // app.get('/recipes', (req,res) => {
