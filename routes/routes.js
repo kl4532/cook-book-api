@@ -18,5 +18,7 @@ module.exports = app => {
 
     router.get("/ingredients/:id", ingredients.getIngredientsForRecipe);
 
+    router.get("/ingredients", ingredients.getAllIngredients);
+
     app.use('/api', router);
 };

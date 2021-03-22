@@ -112,6 +112,12 @@ paths:
       responses:
         '200':
           description: OK
+  /ingredients/:
+    get:
+      summary: Returns all ingredients.
+      responses:
+        '200':
+          description: OK
   /ingredients/{id}:
     get:
       summary: Returns recipe for recipe with id.
